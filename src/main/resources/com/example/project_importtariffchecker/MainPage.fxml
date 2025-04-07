@@ -77,7 +77,7 @@
                 <children>
                     <Label layoutX="20" layoutY="20" text="Select Tariff:"/>
                     <ComboBox fx:id="tariffComboBox" layoutX="130" layoutY="15" prefWidth="150"/>
-                    <Button fx:id="addTariffToShipmentButton" layoutX="290" layoutY="15" text="Add Shipment"/>
+                    <Button fx:id="addShipmentButton" layoutX="290" layoutY="15" text="Add Shipment"/>
 
                     <!-- TableView to display Shipment details -->
                     <TableView fx:id="shipmentTableView" layoutX="20" layoutY="60" prefWidth="400" prefHeight="200">

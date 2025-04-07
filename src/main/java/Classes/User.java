@@ -21,7 +21,7 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-    public void login();
+    public void login(){};
 
-    public void logout();
+    public void logout(){};
 }
