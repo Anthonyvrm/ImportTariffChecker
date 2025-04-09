@@ -1,11 +1,11 @@
-package Classes;
+package Database;
 
 public class DatabaseSetup {
     public static void main(String[] args) {
         Database.DatabaseManager db = new Database.DatabaseManager();
         db.connect();
 
-        // Tabel voor Project (projectID en projectName)
+
         db.executeQuery(
                 "CREATE TABLE IF NOT EXISTS Project (" +
                         "projectID INTEGER PRIMARY KEY, " +
@@ -25,8 +25,7 @@ public class DatabaseSetup {
                         ");"
         );
 
-        // Tabel voor Shipment. Hier slaan we een referentie op naar TariffInfo
-        // en (optioneel) een referentie naar een Project
+
         db.executeQuery(
                 "CREATE TABLE IF NOT EXISTS Shipment (" +
                         "shipmentID INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -37,7 +36,7 @@ public class DatabaseSetup {
                         ");"
         );
 
-        // Tabel voor User
+
         db.executeQuery(
                 "CREATE TABLE IF NOT EXISTS User (" +
                         "userID INTEGER PRIMARY KEY, " +
@@ -46,20 +45,11 @@ public class DatabaseSetup {
                         ");"
         );
 
-        // Tabel voor TradeAgreements
         db.executeQuery(
                 "CREATE TABLE IF NOT EXISTS TradeAgreements (" +
                         "name TEXT PRIMARY KEY, " +
-                        "discountRate REAL" +
-                        ");"
-        );
-
-        // Tabel voor de landen die gebruikt mogen worden per TradeAgreement
-        db.executeQuery(
-                "CREATE TABLE IF NOT EXISTS TradeAgreementsCountries (" +
-                        "tradeAgreementName TEXT, " +
-                        "country TEXT, " +
-                        "FOREIGN KEY(tradeAgreementName) REFERENCES TradeAgreements(name)" +
+                        "discountRate REAL, " +
+                        "usableCountries TEXT" +
                         ");"
         );
 

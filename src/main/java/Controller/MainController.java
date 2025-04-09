@@ -23,7 +23,7 @@ public class MainController {
     private Button loginButton;
 
     // ===== Project Tab =====
-    // Note: Our Project class expects an int projectID and a String projectName.
+
     @FXML
     private TextField projectIDField; // New field added in the updated FXML.
     @FXML
@@ -36,7 +36,6 @@ public class MainController {
     private ListView<Project> projectListView;
 
     // ===== Tariffs Tab =====
-    // TariffInfo expects: int tariffCode, String countryOfOrigin, String shippingCountry, String deliveryCountry, float value, float rate.
     @FXML
     private TextField tariffCodeField;
     @FXML
@@ -61,61 +60,60 @@ public class MainController {
     private TableColumn<TariffInfo, String> countryOriginColumn;
     @FXML
     private TableColumn<TariffInfo, Number> rateColumn;
+    @FXML private TableColumn<TariffInfo, String> calculatedTariffColumn;
 
     // ===== Shipment Tab =====
-    // Shipment takes a TariffInfo and a TariffOpzoekService.
-    // We removed shipmentNameField because Shipment doesn't include a name.
     @FXML
     private ComboBox<TariffInfo> tariffComboBox;
     @FXML
     private Button addShipmentButton; // Renamed from addTariffToShipmentButton.
     @FXML
     private TableView<Shipment> shipmentTableView;
-    // We'll display the tariff code from the tariffInfo in the shipment.
+
     @FXML
     private TableColumn<Shipment, String> tariffCodeShipmentColumn;
 
-    // Data lists for UI components
+
     private ObservableList<Project> projects = FXCollections.observableArrayList();
     private ObservableList<TariffInfo> tariffs = FXCollections.observableArrayList();
     private ObservableList<Shipment> shipments = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
-        // Initialize Tariff TableView columns.
+
         tariffCodeColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty(String.valueOf(cellData.getValue().getTariffCode()))
         );
         countryOriginColumn.setCellValueFactory(new PropertyValueFactory<>("countryOfOrigin"));
         rateColumn.setCellValueFactory(new PropertyValueFactory<>("rate"));
+        calculatedTariffColumn.setCellValueFactory(cellData ->
+                        new SimpleStringProperty(String.valueOf(cellData.getValue().getCalculatedTariff())));
         tariffTableView.setItems(tariffs);
 
         // Initialize Project ListView.
         projectListView.setItems(projects);
 
-        // Initialize Shipment TableView.
-        // We display the tariff code from the Shipment's TariffInfo.
         tariffCodeShipmentColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty(String.valueOf(cellData.getValue().getTariffInfo().getTariffCode()))
         );
         shipmentTableView.setItems(shipments);
 
-        // Initialize Tariff ComboBox.
+
         tariffComboBox.setItems(tariffs);
 
-        // Set up button action listeners.
+
         loginButton.setOnAction(event -> handleLogin());
         createProjectButton.setOnAction(event -> handleCreateProject());
         updateProjectButton.setOnAction(event -> handleUpdateProject());
         lookupTariffButton.setOnAction(event -> handleLookupTariff());
-        addTariffButton.setOnAction(event -> handleAddTariff());
+
         addShipmentButton.setOnAction(event -> handleAddShipment());
     }
 
     private void handleLogin() {
         String username = usernameField.getText();
         String password = passwordField.getText();
-        // Dummy authentication logic.
+
         if ("user".equals(username) && "pass".equals(password)) {
             System.out.println("Login successful!");
         } else {
@@ -160,19 +158,32 @@ public class MainController {
 
     private void handleLookupTariff() {
         try {
-            int code = Integer.parseInt(tariffCodeField.getText());
-            for (TariffInfo tariff : tariffs) {
-                if (tariff.getTariffCode() == code) {
-                    tariffTableView.getSelectionModel().select(tariff);
-                    System.out.println("Found tariff: " + code);
-                    return;
-                }
-            }
-            System.out.println("No tariff found with code: " + code);
+
+            int code = Integer.parseInt(tariffCodeField.getText().trim());
+            String countryOrigin = countryOriginField.getText().trim();
+            String shippingCountry = shippingCountryField.getText().trim();
+            String deliveryCountry = deliveryCountryField.getText().trim();
+            float value = Float.parseFloat(valueField.getText().trim());
+
+
+            TariffInfo tariff = new TariffInfo(code, countryOrigin, shippingCountry, deliveryCountry, value, 0f);
+
+            TariffOpzoekService tariffService = new TariffOpzoekService();
+            tariffService.calculateTariff(tariff);
+
+
+            rateField.setText(String.valueOf(tariff.getRate()));
+
+            tariffs.add(tariff);
+            tariffTableView.refresh();
+
+            System.out.println("Tariff updated: Rate = " + tariff.getRate()
+                    + ", Calculated Duty = " + tariff.getCalculatedTariff());
         } catch (NumberFormatException e) {
-            System.out.println("Please enter a valid tariff code.");
+            System.out.println("Voer geldige numerieke waarden in.");
         }
     }
+
 
     private void handleAddTariff() {
         try {
@@ -199,7 +210,7 @@ public class MainController {
     private void handleAddShipment() {
         TariffInfo selectedTariff = tariffComboBox.getSelectionModel().getSelectedItem();
         if (selectedTariff != null) {
-            // Create a new TariffOpzoekService instance.
+
             TariffOpzoekService tariffService = new TariffOpzoekService();
             Shipment shipment = new Shipment(selectedTariff, tariffService);
             shipments.add(shipment);

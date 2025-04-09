@@ -1,6 +1,8 @@
 module com.example.project_importtariffchecker {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.net.http;
+    requires com.fasterxml.jackson.databind;
     requires java.sql;
 
 
@@ -8,4 +10,8 @@ module com.example.project_importtariffchecker {
     exports com.example.project_importtariffchecker;
     exports Controller;
     opens Controller to javafx.fxml;
+
+    opens Classes to javafx.base, javafx.fxml;
+
+
 }

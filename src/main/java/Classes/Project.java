@@ -36,7 +36,7 @@ public class Project {
         this.shipments.remove(shipment);
     }
     public void shareProject() {
-        // Logic to share the project with other users
+
         System.out.println("Project " + projectName + " shared successfully.");
     }
     public void importProject() {

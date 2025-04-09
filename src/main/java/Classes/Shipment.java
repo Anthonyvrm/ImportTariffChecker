@@ -20,10 +20,10 @@ public class Shipment {
         this.tariffCost = tariffCost;
     }
     public void validateShipment() {
-        // Validate shipment details
+
         if (tariffInfo == null || tariffCost == null) {
             throw new IllegalArgumentException("Tariff information or cost is missing.");
         }
-        // Additional validation logic can be added here
+
     }
 }

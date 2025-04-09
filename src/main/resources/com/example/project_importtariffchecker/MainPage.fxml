@@ -34,7 +34,7 @@
             </AnchorPane>
         </Tab>
 
-        <!-- ==================== TARIFFS TAB ==================== -->
+
         <Tab text="Tariffs">
             <AnchorPane>
                 <children>
@@ -57,14 +57,15 @@
                     <TextField fx:id="rateField" layoutX="130" layoutY="165"/>
 
                     <Button fx:id="lookupTariffButton" layoutX="130" layoutY="200" text="Look Up"/>
-                    <Button fx:id="addTariffButton" layoutX="230" layoutY="200" text="Add Tariff"/>
 
-                    <!-- TableView to display TariffInfo results -->
+
+
                     <TableView fx:id="tariffTableView" layoutX="20" layoutY="240" prefWidth="400" prefHeight="200">
                         <columns>
                             <TableColumn fx:id="tariffCodeColumn" text="Tariff Code" prefWidth="100"/>
                             <TableColumn fx:id="countryOriginColumn" text="Country of Origin" prefWidth="150"/>
                             <TableColumn fx:id="rateColumn" text="Rate" prefWidth="80"/>
+                            <TableColumn fx:id="calculatedTariffColumn" text="Calculated Tariff" prefWidth="100"/>
                         </columns>
                     </TableView>
                 </children>
@@ -79,7 +80,7 @@
                     <ComboBox fx:id="tariffComboBox" layoutX="130" layoutY="15" prefWidth="150"/>
                     <Button fx:id="addShipmentButton" layoutX="290" layoutY="15" text="Add Shipment"/>
 
-                    <!-- TableView to display Shipment details -->
+
                     <TableView fx:id="shipmentTableView" layoutX="20" layoutY="60" prefWidth="400" prefHeight="200">
                         <columns>
                             <TableColumn fx:id="tariffCodeShipmentColumn" text="Tariff Code" prefWidth="100"/>
