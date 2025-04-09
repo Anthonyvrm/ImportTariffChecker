@@ -1,5 +1,6 @@
 package com.example.project_importtariffchecker;
 
+import Database.DatabaseManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -17,5 +18,6 @@ public class MainApplication extends Application {
 
     public static void main(String[] args) {
         launch(args);
+         // Initialize the database when the application starts
     }
 }

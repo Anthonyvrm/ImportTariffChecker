@@ -1,10 +1,8 @@
 package Controller;
 
 import Classes.Project;
-import Classes.DatabaseManager;
 import Classes.TariffInfo;
 import Classes.Shipment;
-import Classes.TradeAgreements;
 import Classes.TariffOpzoekService;
 
 import javafx.fxml.FXML;
