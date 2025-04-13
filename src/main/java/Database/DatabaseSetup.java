@@ -5,18 +5,16 @@ public class DatabaseSetup {
         Database.DatabaseManager db = new Database.DatabaseManager();
         db.connect();
 
-
         db.executeQuery(
                 "CREATE TABLE IF NOT EXISTS Project (" +
-                        "projectID INTEGER PRIMARY KEY, " +
+                        "projectID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "projectName TEXT NOT NULL" +
                         ");"
         );
 
-        // Tabel voor TariffInfo (met alle velden)
         db.executeQuery(
                 "CREATE TABLE IF NOT EXISTS TariffInfo (" +
-                        "tariffCode INTEGER PRIMARY KEY, " +
+                        "taricCode INTEGER PRIMARY KEY, " +
                         "countryOfOrigin TEXT NOT NULL, " +
                         "shippingCountry TEXT, " +
                         "deliveryCountry TEXT, " +
@@ -25,21 +23,19 @@ public class DatabaseSetup {
                         ");"
         );
 
-
         db.executeQuery(
                 "CREATE TABLE IF NOT EXISTS Shipment (" +
                         "shipmentID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                        "tariffCode INTEGER, " +
+                        "taricCode INTEGER, " +
                         "projectID INTEGER, " +
-                        "FOREIGN KEY(tariffCode) REFERENCES TariffInfo(tariffCode), " +
+                        "FOREIGN KEY(taricCode) REFERENCES TariffInfo(taricCode), " +
                         "FOREIGN KEY(projectID) REFERENCES Project(projectID)" +
                         ");"
         );
 
-
         db.executeQuery(
                 "CREATE TABLE IF NOT EXISTS User (" +
-                        "userID INTEGER PRIMARY KEY, " +
+                        "userID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "name TEXT NOT NULL, " +
                         "password TEXT NOT NULL" +
                         ");"
@@ -54,6 +50,6 @@ public class DatabaseSetup {
         );
 
         db.disconnect();
-        System.out.println("Database setup voltooid.");
+        System.out.println("Database setup completed.");
     }
 }

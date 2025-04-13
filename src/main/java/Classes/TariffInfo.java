@@ -1,16 +1,16 @@
 package Classes;
 
 public class TariffInfo {
-    private int tariffCode;
+    private int taricCode;
     private String countryOfOrigin;
     private String shippingCountry;
     private String deliveryCountry;
     private float value;
     private float rate;
-    private float calculatedTariff;  // Toegevoegd voor het berekende tarief
+    private float calculatedTariff;
 
-    public TariffInfo(int tariffCode, String countryOfOrigin, String shippingCountry, String deliveryCountry, float value, float rate) {
-        this.tariffCode = tariffCode;
+    public TariffInfo(int taricCode, String countryOfOrigin, String shippingCountry, String deliveryCountry, float value, float rate) {
+        this.taricCode = taricCode;
         this.countryOfOrigin = countryOfOrigin;
         this.shippingCountry = shippingCountry;
         this.deliveryCountry = deliveryCountry;
@@ -18,14 +18,12 @@ public class TariffInfo {
         this.rate = rate;
     }
 
-
-
-    public int getTariffCode() {
-        return tariffCode;
+    public int getTaricCode() {
+        return taricCode;
     }
 
-    public void setTariffCode(int tariffCode) {
-        this.tariffCode = tariffCode;
+    public void setTaricCode(int taricCode) {
+        this.taricCode = taricCode;
     }
 
     public String getCountryOfOrigin() {
@@ -74,5 +72,9 @@ public class TariffInfo {
 
     public void setCalculatedTariff(float calculatedTariff) {
         this.calculatedTariff = calculatedTariff;
+    }
+    public String toString() {
+
+        return "Tariff " + taricCode + " (" + countryOfOrigin + " -> " + deliveryCountry + ")";
     }
 }

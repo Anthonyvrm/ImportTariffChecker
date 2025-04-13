@@ -18,6 +18,9 @@ public class DatabaseManager {
             System.out.println("Fout bij verbinden: " + e.getMessage());
         }
     }
+    public Connection getConnection() {
+        return connection;
+    }
 
     public void disconnect() {
         try {
@@ -50,7 +53,7 @@ public class DatabaseManager {
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
-                // Voorbeeld: haal een kolom "name" op
+
                 String info = rs.getString("name");
                 System.out.println(info);
             }

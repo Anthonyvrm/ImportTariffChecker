@@ -5,8 +5,8 @@
          xmlns="http://javafx.com/javafx/8"
          fx:controller="Controller.MainController">
     <tabs>
-        <!-- ==================== LOGIN TAB ==================== -->
-        <Tab text="Login">
+
+        <Tab text="Login" closable="false">
             <AnchorPane>
                 <children>
                     <Label layoutX="20" layoutY="20" text="Username:"/>
@@ -14,32 +14,35 @@
                     <Label layoutX="20" layoutY="60" text="Password:"/>
                     <PasswordField fx:id="passwordField" layoutX="100" layoutY="55"/>
                     <Button fx:id="loginButton" layoutX="100" layoutY="100" text="Login"/>
-                </children>
-            </AnchorPane>
-        </Tab>
-
-        <!-- ==================== PROJECT TAB ==================== -->
-        <Tab text="Project">
-            <AnchorPane>
-                <children>
-                    <Label layoutX="20" layoutY="20" text="Project ID:"/>
-                    <TextField fx:id="projectIDField" layoutX="120" layoutY="15"/>
-                    <Label layoutX="20" layoutY="60" text="Project Name:"/>
-                    <TextField fx:id="projectNameField" layoutX="120" layoutY="55"/>
-                    <Button fx:id="createProjectButton" layoutX="120" layoutY="100" text="Create Project"/>
-                    <Button fx:id="updateProjectButton" layoutX="220" layoutY="100" text="Update Project"/>
-                    <!-- ListView to display existing Projects -->
-                    <ListView fx:id="projectListView" layoutX="350" layoutY="15" prefWidth="200" prefHeight="200"/>
+                    <Button fx:id="registerButton" layoutX="200" layoutY="100" text="Register"/>
+                    <Button fx:id="logoutButton" layoutX="300" layoutY="100" text="Logout"/>
                 </children>
             </AnchorPane>
         </Tab>
 
 
-        <Tab text="Tariffs">
+        <Tab text="Project" closable="false">
             <AnchorPane>
                 <children>
-                    <Label layoutX="20" layoutY="20" text="Tariff Code:"/>
-                    <TextField fx:id="tariffCodeField" layoutX="130" layoutY="15"/>
+
+                    <Label layoutX="20" layoutY="20" text="Project Name:"/>
+                    <TextField fx:id="projectNameField" layoutX="120" layoutY="15"/>
+                    <Button fx:id="createProjectButton" layoutX="120" layoutY="60" text="Create Project"/>
+                    <Button fx:id="updateProjectButton" layoutX="250" layoutY="60" text="Update Project"/>
+                    <Label fx:id="totalTariffCostLabel" layoutX="20" layoutY="250" text="Total Tariff Cost:"/>
+
+
+                    <ListView fx:id="projectListView" layoutX="400" layoutY="15" prefWidth="200" prefHeight="200"/>
+                </children>
+            </AnchorPane>
+        </Tab>
+
+
+        <Tab text="Tariffs" closable="false">
+            <AnchorPane>
+                <children>
+                    <Label layoutX="20" layoutY="20" text="Taric Code:"/>
+                    <TextField fx:id="taricCodeField" layoutX="130" layoutY="15"/>
 
                     <Label layoutX="20" layoutY="50" text="Country of Origin:"/>
                     <TextField fx:id="countryOriginField" layoutX="130" layoutY="45"/>
@@ -57,12 +60,11 @@
                     <TextField fx:id="rateField" layoutX="130" layoutY="165"/>
 
                     <Button fx:id="lookupTariffButton" layoutX="130" layoutY="200" text="Look Up"/>
-
-
+                    <Button fx:id="addTariffButton" layoutX="250" layoutY="200" text="Add Tariff"/>
 
                     <TableView fx:id="tariffTableView" layoutX="20" layoutY="240" prefWidth="400" prefHeight="200">
                         <columns>
-                            <TableColumn fx:id="tariffCodeColumn" text="Tariff Code" prefWidth="100"/>
+                            <TableColumn fx:id="taricCodeColumn" text="Taric Code" prefWidth="100"/>
                             <TableColumn fx:id="countryOriginColumn" text="Country of Origin" prefWidth="150"/>
                             <TableColumn fx:id="rateColumn" text="Rate" prefWidth="80"/>
                             <TableColumn fx:id="calculatedTariffColumn" text="Calculated Tariff" prefWidth="100"/>
@@ -72,18 +74,29 @@
             </AnchorPane>
         </Tab>
 
-        <!-- ==================== SHIPMENT TAB ==================== -->
-        <Tab text="Shipment">
+        <Tab text="Shipment" closable="false">
             <AnchorPane>
                 <children>
-                    <Label layoutX="20" layoutY="20" text="Select Tariff:"/>
-                    <ComboBox fx:id="tariffComboBox" layoutX="130" layoutY="15" prefWidth="150"/>
-                    <Button fx:id="addShipmentButton" layoutX="290" layoutY="15" text="Add Shipment"/>
+
+                    <Label layoutX="20" layoutY="20" text="Shipment Name:"/>
+                    <TextField fx:id="shipmentNameField" layoutX="150" layoutY="15" prefWidth="150"/>
 
 
-                    <TableView fx:id="shipmentTableView" layoutX="20" layoutY="60" prefWidth="400" prefHeight="200">
+                    <Label layoutX="20" layoutY="55" text="Select Tariff:"/>
+                    <ComboBox fx:id="tariffComboBox" layoutX="150" layoutY="50" prefWidth="150"/>
+                    <Button fx:id="addTariffToShipmentButton" layoutX="320" layoutY="50" text="Add Tariff"/>
+
+
+                    <Label layoutX="20" layoutY="90" text="Shipment Tariffs:"/>
+                    <ListView fx:id="currentShipmentTariffListView" layoutX="150" layoutY="90" prefWidth="150" prefHeight="80"/>
+
+                    <Button fx:id="createShipmentButton" layoutX="150" layoutY="180" text="Create Shipment"/>
+
+
+                    <TableView fx:id="shipmentTableView" layoutX="20" layoutY="220" prefWidth="400" prefHeight="200">
                         <columns>
-                            <TableColumn fx:id="tariffCodeShipmentColumn" text="Tariff Code" prefWidth="100"/>
+                            <TableColumn fx:id="shipmentNameColumn" text="Shipment Name" prefWidth="150"/>
+                            <TableColumn fx:id="taricCodeShipmentColumn" text="Taric Code" prefWidth="150"/>
                         </columns>
                     </TableView>
                 </children>
