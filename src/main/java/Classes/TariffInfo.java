@@ -8,6 +8,10 @@ public class TariffInfo {
     private float value;
     private float rate;
     private float calculatedTariff;
+    private TradeAgreements appliedAgreement;
+    public TradeAgreements getAppliedAgreement() { return appliedAgreement; }
+    public void setAppliedAgreement(TradeAgreements a) { appliedAgreement = a; }
+
 
     public TariffInfo(int taricCode, String countryOfOrigin, String shippingCountry, String deliveryCountry, float value, float rate) {
         this.taricCode = taricCode;
@@ -65,6 +69,9 @@ public class TariffInfo {
     public void setRate(float rate) {
         this.rate = rate;
     }
+
+
+
 
     public float getCalculatedTariff() {
         return calculatedTariff;

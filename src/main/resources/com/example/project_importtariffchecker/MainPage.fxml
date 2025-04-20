@@ -59,15 +59,22 @@
                     <Label layoutX="20" layoutY="170" text="Rate:"/>
                     <TextField fx:id="rateField" layoutX="130" layoutY="165"/>
 
+                    <Label layoutX="300" layoutY="20" text="Trade Agreement:"/>
+                    <ComboBox fx:id="agreementComboBox" layoutX="410" layoutY="15" prefWidth="150"/>
+
+
                     <Button fx:id="lookupTariffButton" layoutX="130" layoutY="200" text="Look Up"/>
                     <Button fx:id="addTariffButton" layoutX="250" layoutY="200" text="Add Tariff"/>
 
                     <TableView fx:id="tariffTableView" layoutX="20" layoutY="240" prefWidth="400" prefHeight="200">
                         <columns>
+
                             <TableColumn fx:id="taricCodeColumn" text="Taric Code" prefWidth="100"/>
                             <TableColumn fx:id="countryOriginColumn" text="Country of Origin" prefWidth="150"/>
                             <TableColumn fx:id="rateColumn" text="Rate" prefWidth="80"/>
                             <TableColumn fx:id="calculatedTariffColumn" text="Calculated Tariff" prefWidth="100"/>
+                            <TableColumn fx:id="agreementColumn" text="Agreement" prefWidth="150"/>
+
                         </columns>
                     </TableView>
                 </children>

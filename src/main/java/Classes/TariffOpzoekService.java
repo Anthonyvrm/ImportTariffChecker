@@ -18,28 +18,40 @@ public class TariffOpzoekService {
     }
 
 
-    public void calculateTariff(TariffInfo tariffInfo) {
+    public void calculateTariff(TariffInfo info, TradeAgreements agreement) {
 
-        int taricCode = tariffInfo.getTaricCode();
-        String countryOfOrigin = tariffInfo.getCountryOfOrigin();
-        String shippingCountry = tariffInfo.getShippingCountry();
-        String deliveryCountry = tariffInfo.getDeliveryCountry();
-        float value = tariffInfo.getValue();
-
-
-        float rate = lookupRate(taricCode, countryOfOrigin, shippingCountry, deliveryCountry);
-
-
-        tariffInfo.setRate(rate);
+        float rate = lookupRate(
+                info.getTaricCode(),
+                info.getCountryOfOrigin(),
+                info.getShippingCountry(),
+                info.getDeliveryCountry()
+        );
+        info.setRate(rate);
+        float baseTariff = info.getValue() * rate;
 
 
-        float calculatedTariff = value * rate;
+        float discount = 0;
+        if (agreement != null
+                && agreement.getUsableCountries().contains(info.getCountryOfOrigin())
+                && agreement.getUsableCountries().contains(info.getDeliveryCountry())
+        ) {
+            discount = baseTariff * agreement.getDiscountRate();
+            System.out.println("Applied " + agreement.getName() +
+                    " discount: " + (agreement.getDiscountRate() * 100) + "%");
+        }
+
+        float finalTariff = baseTariff - discount;
+        info.setCalculatedTariff(finalTariff);
+
+        System.out.println(String.format(
+                "Tariff calculated: base=%.2f, discount=%.2f, final=%.2f",
+                baseTariff, discount, finalTariff
+        ));
+        info.setAppliedAgreement(agreement);
 
 
-        tariffInfo.setCalculatedTariff(calculatedTariff);
-
-        System.out.println("Tariff calculated: Value = " + value + ", Rate = " + rate + ", Duty = " + calculatedTariff);
     }
+
 
     public void checkTradeAgreements() {
 

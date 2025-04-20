@@ -8,6 +8,9 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.Label;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.control.TableColumn;
+
 
 
 import java.sql.PreparedStatement;
@@ -84,16 +87,38 @@ public class MainController {
     private TableColumn<Shipment, String> shipmentNameColumn;
     @FXML
     private TableColumn<Shipment, String> taricCodeShipmentColumn;
+    @FXML
+    private ComboBox<TradeAgreements> agreementComboBox;
+    @FXML private TableColumn<TariffInfo, String> agreementColumn;
+
 
     private ObservableList<Project> projects = FXCollections.observableArrayList();
     private ObservableList<TariffInfo> tariffs = FXCollections.observableArrayList();
     private ObservableList<Shipment> shipments = FXCollections.observableArrayList();
+    private ObservableList<TradeAgreements> tradeAgreements = FXCollections.observableArrayList();
 
 
     private ObservableList<TariffInfo> tempShipmentTariffs = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
+        TradeAgreements ftaEU = new TradeAgreements("EU FTA", 0.05f);
+        ftaEU.addUsableCountry("Germany");
+        ftaEU.addUsableCountry("France");
+        tradeAgreements.add(ftaEU);
+
+        TradeAgreements ceta = new TradeAgreements("CETA", 0.08f);
+        ceta.addUsableCountry("Canada");
+        tradeAgreements.add(ceta);
+
+        agreementComboBox.setItems(tradeAgreements);
+        agreementColumn.setCellValueFactory(cellData -> {
+
+            TradeAgreements ag = cellData.getValue().getAppliedAgreement();
+            return new SimpleStringProperty(ag == null ? "—" : ag.getName());
+        });
+
+
 
         taricCodeColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty(String.valueOf(cellData.getValue().getTaricCode()))
@@ -154,6 +179,8 @@ public class MainController {
             System.out.println("Login failed. Please check your credentials.");
         }
     }
+
+
 
 
     private void handleRegister() {
@@ -223,8 +250,10 @@ public class MainController {
             float value = Float.parseFloat(valueField.getText().trim());
 
             TariffInfo tariff = new TariffInfo(taricCode, countryOrigin, shippingCountry, deliveryCountry, value, 0f);
+            TradeAgreements selectedAgreement = agreementComboBox.getSelectionModel().getSelectedItem();
             TariffOpzoekService tariffService = new TariffOpzoekService();
-            tariffService.calculateTariff(tariff);
+
+            tariffService.calculateTariff(tariff, selectedAgreement);
             rateField.setText(String.valueOf(tariff.getRate()));
 
             tariffs.add(tariff);
