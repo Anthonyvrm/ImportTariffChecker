@@ -13,5 +13,4 @@ module com.example.project_importtariffchecker {
 
     opens Classes to javafx.base, javafx.fxml;
 
-
 }
